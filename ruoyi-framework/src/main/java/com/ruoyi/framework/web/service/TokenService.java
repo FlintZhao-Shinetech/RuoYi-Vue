@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import javax.crypto.SecretKey;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,10 @@ import com.ruoyi.common.utils.uuid.IdUtils;
 
 import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -179,9 +183,13 @@ public class TokenService
      */
     private String createToken(Map<String, Object> claims)
     {
-        String token = Jwts.builder()
-                .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
+        JwtBuilder builder = Jwts.builder();
+        claims.keySet().stream().forEach(claimKey->{
+            builder.claim(claimKey, claims.get(claimKey));
+        });
+        String token = builder.signWith(key).compact();
+        
         return token;
     }
 
@@ -193,10 +201,12 @@ public class TokenService
      */
     private Claims parseToken(String token)
     {
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     /**

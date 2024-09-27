@@ -113,11 +113,22 @@ public class SecurityConfig
             .authorizeHttpRequests((requests) -> {
                 // permitAllUrl.getUrls().forEach(url -> requests.antMatchers(url).permitAll());
                 permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(new AntPathRequestMatcher(url)).permitAll());
+                // AntPathRequestMatcher staticAntMatcher=new AntPathRequestMatcher("/").antMatcher(HttpMethod.GET,"/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**");
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
                 requests.requestMatchers(new AntPathRequestMatcher("/login"),new AntPathRequestMatcher("/register"),new AntPathRequestMatcher("/captchaImage")).permitAll()
                     // 静态资源，可匿名访问
-                    .requestMatchers(HttpMethod.GET,"/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
-                    .requestMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/*.html")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/**/*.html")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/**/*.css")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/**/*.js")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/profile/**")).permitAll()
+                    // swagger
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/swagger-ui.html")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/swagger-resources/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/webjars/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/*/api-docs")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, "/druid/**")).permitAll()
                     // 除上面外的所有请求全部需要鉴权认证
                     .anyRequest().authenticated();
             })
