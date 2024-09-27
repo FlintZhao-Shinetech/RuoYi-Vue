@@ -232,7 +232,7 @@
                 <li>升级oshi到最新版本6.4.3</li>
                 <li>升级druid到最新版本1.2.16</li>
                 <li>升级fastjson到最新版2.0.34</li>
-                <li>升级spring-boot到最新版本2.5.15</li>
+                <li>升级spring-boot到最新版本3.3.4</li>
                 <li>升级element-ui到最新版本2.15.13</li>
                 <li>移除apache/commons-fileupload依赖</li>
                 <li>修复页面切换时布局错乱的问题</li>

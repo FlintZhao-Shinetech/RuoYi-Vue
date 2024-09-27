@@ -2,9 +2,11 @@ package com.ruoyi.common.utils.ip;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import javax.servlet.http.HttpServletRequest;
+
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 获取IP方法

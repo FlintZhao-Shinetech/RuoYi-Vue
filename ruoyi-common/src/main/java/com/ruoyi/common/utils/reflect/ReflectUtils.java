@@ -7,11 +7,13 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.utils.DateUtils;
 
@@ -313,7 +315,7 @@ public class ReflectUtils
     public static void makeAccessible(Method method)
     {
         if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers()))
-                && !method.isAccessible())
+                && !method.canAccess(null))
         {
             method.setAccessible(true);
         }
@@ -325,7 +327,7 @@ public class ReflectUtils
     public static void makeAccessible(Field field)
     {
         if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers())
-                || Modifier.isFinal(field.getModifiers())) && !field.isAccessible())
+                || Modifier.isFinal(field.getModifiers())) && !field.canAccess(null))
         {
             field.setAccessible(true);
         }

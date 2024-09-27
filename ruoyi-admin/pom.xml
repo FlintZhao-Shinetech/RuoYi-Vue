@@ -39,8 +39,8 @@
 
          <!-- Mysql驱动包 -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
         <!-- 核心模块-->
@@ -68,10 +68,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.5.15</version>
-                <configuration>
-                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
-                </configuration>
+                <version>3.3.4</version>
+                <!-- 新版spring boot 已移除此配置 -->
+                <!-- <configuration> -->
+                    <!-- 如果没有该配置，devtools不会生效 -->
+                    <!-- <fork>true</fork> -->
+                <!-- </configuration> -->
                 <executions>
                     <execution>
                         <goals>
