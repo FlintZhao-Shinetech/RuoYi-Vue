@@ -37,7 +37,7 @@
 
         <!-- 验证码 -->
         <dependency>
-            <groupId>pro.fessional</groupId>
+            <groupId>com.shinetechsoftware</groupId>
             <artifactId>kaptcha</artifactId>
             <exclusions>
                 <exclusion>
